@@ -2,13 +2,13 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Agendamento</title>
   <link rel="icon" type="image/png" href="favicon.ico">
 
   <!-- Embedded CSS -->
   <style>
-    * {
+    * {            
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -433,6 +433,28 @@
       transform: rotate(15deg);
     }
 
+    /* NOVO RODAPÉ */
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      color: #b33c3c;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .footer a {
+      color: #ff6b6b;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .footer a:hover {
+      color: #b33c3c;
+      text-decoration: underline;
+    }
+
     @media (max-width: 600px) {
       body {
         padding: 15px;
@@ -523,7 +545,7 @@
         <span id="alicatesTexto"></span>
       </div>
       <input type="number" id="quantidade" min="5" maxlength="3" oninput="atualizarQuantidadeTexto()" />
-      <div id="qntLabel" class="value-warning">Por logística, o valor mínimo é de R$ 50,00.</div>
+      <div id="qntLabel" class="value-warning">Por logística, o valor mínimo é de R$ 60,00.</div>
 
       <label>Nome completo:</label>
       <input type="text" id="nome" required />
@@ -539,6 +561,14 @@
 
     <div class="section hidden" id="cancelamentoSection">
       <button class="button-link button-cancel" onclick="mostrarModalCancelamento()">❌ Cancelar Agendamento</button>
+    </div>
+    
+    <!-- NOVO RODAPÉ -->
+    <div class="footer">
+      Gostou deste aplicativo? 
+      <a href="https://wa.me/SEUNUMERO?text=Olá! Gostaria de saber mais sobre desenvolvimento de aplicativos." target="_blank">
+        Agende para fazer o seu!
+      </a>
     </div>
   </div>
 
