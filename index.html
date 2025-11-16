@@ -627,6 +627,34 @@
     let horariosOcupados = {};
     let agendamentoSelecionadoCancelamento = null;
 
+    // ⭐ NOVA FUNÇÃO: Limpeza automática de agendamentos expirados
+    function limparAgendamentosExpirados() {
+      const agendamentos = obterAgendamentosDoLocalStorage();
+      if (agendamentos.length === 0) return 0;
+      
+      const agora = DateTime.now().setZone("America/Manaus");
+      let removidos = 0;
+      
+      const agendamentosValidos = agendamentos.filter(ag => {
+        const [hora, minuto] = ag.horario.split(":").map(Number);
+        const dataHoraAgendamento = DateTime.fromISO(ag.data)
+          .set({ hour: hora, minute: minuto });
+        
+        // Mantém apenas agendamentos FUTUROS (data+hora ainda não passou)
+        const deveManter = dataHoraAgendamento > agora;
+        if (!deveManter) removidos++;
+        
+        return deveManter;
+      });
+      
+      if (removidos > 0) {
+        localStorage.setItem('agendamentos', JSON.stringify(agendamentosValidos));
+        console.log(`🔄 Limpeza automática: ${removidos} agendamentos expirados removidos`);
+      }
+      
+      return removidos;
+    }
+
     // Função para formatar telefone
     function formatarTelefone(input) {
       // Remove tudo que não é número
@@ -762,6 +790,9 @@
       });
       criarCalendario();
       carregarDadosSalvos();
+      
+      // ⭐ NOVA LINHA: Executar limpeza automática sempre que carregar a página
+      limparAgendamentosExpirados();
       verificarExibirBotaoCancelamento();
       
       // Adicionar event listener para formatação do telefone
